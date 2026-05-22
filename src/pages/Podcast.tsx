@@ -44,6 +44,35 @@ const parseTags = (tags: string | null): string[] => {
   return tags.split(',').map(t => t.trim()).filter(Boolean);
 };
 
+const SEED_EPISODES: Episode[] = [
+  {
+    id: 'seed-1',
+    episode_number: 1,
+    title: 'You Still Need Sugar: The Diabetes Roundtable with Dietitian/Nutritionist Janice Baker',
+    guest_name: 'Janice Baker',
+    guest_title: 'MBA, RD, CDE, CNSC, BC-ADM',
+    description: 'In this episode of the Diabetes Roundtable, hosts Kaden and Abhi talk with veteran dietitian and diabetes educator Janice Baker about how diabetes care has evolved—from basic treatments to modern, personalized approaches using technology like continuous glucose monitoring. She shares practical lifestyle tips, including sleep, exercise, balanced nutrition, and regular screenings, while also addressing the emotional impact of diabetes and the need for compassionate, stigma-free care. The episode highlights helpful resources and debunks common diabetes myths.',
+    date: '2026-05-21',
+    tags: null,
+    type: 'video',
+    audio_url: null,
+    video_url: 'https://www.youtube.com/watch?v=LePt0GRAVxg',
+  },
+  {
+    id: 'seed-2',
+    episode_number: 2,
+    title: "It's Not About Appearance: The Diabetes Roundtable with Pediatrician Dr. Swetang Shah",
+    guest_name: 'Dr. Swetang Shah',
+    guest_title: 'MD, MPH, FAAP',
+    description: "In this episode of the Diabetes Roundtable, we sit down with a leading pediatric expert to explore how diabetes affects children and families today. From recognizing early warning signs to understanding how daily habits shape long-term health, this conversation offers practical insights for parents, teens, and caregivers. We also dive into common misconceptions, the realities of different types of diabetes, and how families can navigate challenges like access to care and treatment. Tune in for an informative discussion that sheds light on what truly matters when it comes to managing and preventing diabetes in young people.",
+    date: '2026-05-21',
+    tags: null,
+    type: 'video',
+    audio_url: null,
+    video_url: 'https://www.youtube.com/watch?v=bFydzb0iYRo&t=1s',
+  },
+];
+
 export default function Podcast() {
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,7 +99,13 @@ export default function Podcast() {
       .from('podcast_episodes')
       .select('*')
       .order('created_at', { ascending: false });
-    if (!error && data) setEpisodes(data);
+    if (!error && data) {
+      const dbNumbers = new Set(data.map((ep: Episode) => ep.episode_number));
+      const merged = [...data, ...SEED_EPISODES.filter(s => !dbNumbers.has(s.episode_number))];
+      setEpisodes(merged);
+    } else {
+      setEpisodes(SEED_EPISODES);
+    }
     setLoading(false);
   };
 
