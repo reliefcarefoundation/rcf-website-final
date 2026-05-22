@@ -106,6 +106,18 @@ export default function OurValues() {
           />
         </div>
 
+        <div className="bg-white rounded-lg p-8 shadow-md mb-12">
+          <h2 className="text-3xl font-bold text-[#00529b] mb-4">Our Team</h2>
+          <p className="text-slate-600 mb-6">We are a student-led initiative.</p>
+          <div className="flex flex-wrap gap-3">
+            {['Dev Shah', 'Abhiram Tenneti', 'Kaden Yoo', 'Hiroto Torii', 'Sahil Agrawal'].map((name) => (
+              <span key={name} className="bg-[#e0f2f7] text-[#00529b] font-semibold px-4 py-2 rounded-full text-sm">
+                {name}
+              </span>
+            ))}
+          </div>
+        </div>
+
         <div className="bg-[#00529b] rounded-lg p-8 text-center text-white">
           <h2 className="text-3xl font-bold mb-6">Values in Action</h2>
           <p className="text-lg mb-8 max-w-2xl mx-auto">

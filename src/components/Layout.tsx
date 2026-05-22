@@ -187,7 +187,7 @@ export default function Layout({ children }: LayoutProps) {
               </a>
 
               <a
-                href="https://www.instagram.com/reliefcare.foundation/?utm_source=ig_web_button_share_sheet"
+                href="https://www.instagram.com/relief.care.foundation?igsh=NTc4MTIwNjQ2YQ=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex flex-col items-center hover:scale-110 transition-transform"
@@ -196,7 +196,22 @@ export default function Layout({ children }: LayoutProps) {
                 <div className="w-10 h-10 rounded-full flex items-center justify-center bg-slate-100 hover:bg-pink-50 transition-colors">
                   <Instagram className="w-5 h-5 text-[#E1306C]" />
                 </div>
-                <span className="text-xs text-slate-600 mt-2 text-center">@reliefcare.foundation</span>
+                <span className="text-xs text-slate-600 mt-2 text-center">@relief.care.foundation</span>
+              </a>
+
+              <a
+                href="https://x.com/ReliefCareFDN"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center hover:scale-110 transition-transform"
+                title="Follow us on X"
+              >
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors">
+                  <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </div>
+                <span className="text-xs text-slate-600 mt-2 text-center">@ReliefCareFDN</span>
               </a>
 
               <a

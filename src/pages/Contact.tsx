@@ -26,7 +26,7 @@ export default function Contact() {
             Have questions? Want to learn more? Reach out to us through any of these channels.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
             <a
               href="mailto:reliefcarefoundation@gmail.com"
               className="flex flex-col items-center text-center hover:scale-105 transition-transform"
@@ -41,7 +41,7 @@ export default function Contact() {
             </a>
 
             <a
-              href="https://www.instagram.com/reliefcare.foundation/?utm_source=ig_web_button_share_sheet"
+              href="https://www.instagram.com/relief.care.foundation?igsh=NTc4MTIwNjQ2YQ=="
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center text-center hover:scale-105 transition-transform"
@@ -51,7 +51,24 @@ export default function Contact() {
               </div>
               <h3 className="text-lg font-bold text-[#E1306C] mb-2">Instagram</h3>
               <p className="text-sm text-slate-600 hover:text-[#E1306C] transition-colors">
-                @reliefcare.foundation
+                @relief.care.foundation
+              </p>
+            </a>
+
+            <a
+              href="https://x.com/ReliefCareFDN"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center text-center hover:scale-105 transition-transform"
+            >
+              <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-black mb-2">X (Twitter)</h3>
+              <p className="text-sm text-slate-600 hover:text-black transition-colors">
+                @ReliefCareFDN
               </p>
             </a>
 
