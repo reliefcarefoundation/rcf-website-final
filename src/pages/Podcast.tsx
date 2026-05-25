@@ -215,51 +215,6 @@ export default function Podcast() {
         ) : (
           <>
             <section className="mb-12">
-              <h2 className="text-3xl font-bold text-[#00529b] mb-6">Audio Episodes</h2>
-              {audioEpisodes.length === 0 ? (
-                <div className="text-center p-8 bg-white rounded-lg text-slate-600">No audio episodes yet. Check back soon.</div>
-              ) : (
-                <div className="space-y-4">
-                  {audioEpisodes.map((episode) => (
-                    <div key={episode.id} className="bg-white rounded-lg p-6 shadow-md">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <div className="flex items-center space-x-3 mb-2">
-                            <span className="bg-[#e0f2f7] text-[#00529b] font-bold px-3 py-1 rounded text-sm">#{episode.episode_number}</span>
-                            {parseTags(episode.tags).slice(0, 2).map((tag, i) => (
-                              <span key={i} className="bg-[#fff5e0] text-[#f58220] font-medium px-3 py-1 rounded text-sm">{tag}</span>
-                            ))}
-                          </div>
-                          <h3 className="text-2xl font-bold text-slate-800 mb-2">{episode.title}</h3>
-                          <p className="text-slate-600 mb-1"><span className="font-bold">{episode.guest_name}</span> • {episode.guest_title}</p>
-                          <p className="text-sm text-slate-500 mb-4">{episode.date}</p>
-                          <p className="text-slate-700 leading-relaxed mb-4">{episode.description}</p>
-                        </div>
-                        {adminUnlocked && (
-                          <div className="flex flex-col space-y-2 ml-4">
-                            <button onClick={() => handleEditEpisode(episode)} className="bg-[#00529b] text-white font-semibold text-sm px-3 py-1.5 rounded-lg hover:bg-[#003d75] transition-colors flex items-center space-x-1">
-                              <Edit className="w-4 h-4" /><span>Edit</span>
-                            </button>
-                            <button onClick={() => handleDeleteEpisode(episode.id)} className="text-red-500 hover:text-red-700 font-semibold text-sm flex items-center space-x-1">
-                              <Trash2 className="w-4 h-4" /><span>Delete</span>
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                      {episode.audio_url && (
-                        <audio controls className="w-full mt-3">
-                          <source src={episode.audio_url} type="audio/mpeg" />
-                        </audio>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </section>
-
-            {(audioEpisodes.length > 0 || videoEpisodes.length > 0) && <div className="border-t-2 border-gray-300 my-12" />}
-
-            <section className="mb-12">
               <h2 className="text-3xl font-bold text-[#00529b] mb-6">Audio & Video Episodes</h2>
               {videoEpisodes.length === 0 ? (
                 <div className="text-center p-8 bg-white rounded-lg text-slate-600">No video episodes yet. Check back soon.</div>
@@ -307,6 +262,51 @@ export default function Podcast() {
                       })()}
                       {episode.audio_url && (
                         <audio controls className="w-full">
+                          <source src={episode.audio_url} type="audio/mpeg" />
+                        </audio>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            {(audioEpisodes.length > 0 || videoEpisodes.length > 0) && <div className="border-t-2 border-gray-300 my-12" />}
+
+            <section className="mb-12">
+              <h2 className="text-3xl font-bold text-[#00529b] mb-6">Audio Episodes</h2>
+              {audioEpisodes.length === 0 ? (
+                <div className="text-center p-8 bg-white rounded-lg text-slate-600">No audio episodes yet. Check back soon.</div>
+              ) : (
+                <div className="space-y-4">
+                  {audioEpisodes.map((episode) => (
+                    <div key={episode.id} className="bg-white rounded-lg p-6 shadow-md">
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <div className="flex items-center space-x-3 mb-2">
+                            <span className="bg-[#e0f2f7] text-[#00529b] font-bold px-3 py-1 rounded text-sm">#{episode.episode_number}</span>
+                            {parseTags(episode.tags).slice(0, 2).map((tag, i) => (
+                              <span key={i} className="bg-[#fff5e0] text-[#f58220] font-medium px-3 py-1 rounded text-sm">{tag}</span>
+                            ))}
+                          </div>
+                          <h3 className="text-2xl font-bold text-slate-800 mb-2">{episode.title}</h3>
+                          <p className="text-slate-600 mb-1"><span className="font-bold">{episode.guest_name}</span> • {episode.guest_title}</p>
+                          <p className="text-sm text-slate-500 mb-4">{episode.date}</p>
+                          <p className="text-slate-700 leading-relaxed mb-4">{episode.description}</p>
+                        </div>
+                        {adminUnlocked && (
+                          <div className="flex flex-col space-y-2 ml-4">
+                            <button onClick={() => handleEditEpisode(episode)} className="bg-[#00529b] text-white font-semibold text-sm px-3 py-1.5 rounded-lg hover:bg-[#003d75] transition-colors flex items-center space-x-1">
+                              <Edit className="w-4 h-4" /><span>Edit</span>
+                            </button>
+                            <button onClick={() => handleDeleteEpisode(episode.id)} className="text-red-500 hover:text-red-700 font-semibold text-sm flex items-center space-x-1">
+                              <Trash2 className="w-4 h-4" /><span>Delete</span>
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      {episode.audio_url && (
+                        <audio controls className="w-full mt-3">
                           <source src={episode.audio_url} type="audio/mpeg" />
                         </audio>
                       )}
