@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Lock, Trash2, CreditCard as Edit, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useAdminAuth } from '../hooks/useAdminAuth';
 
 interface BlogPost {
   id: string;
@@ -14,7 +15,7 @@ export default function Blog() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [adminUnlocked, setAdminUnlocked] = useState(false);
+  const { isAdmin, signIn, signOut } = useAdminAuth();
   const [adminPassword, setAdminPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
@@ -37,13 +38,14 @@ export default function Blog() {
     setLoading(false);
   };
 
-  const handleUnlock = () => {
-    if (adminPassword === 're1ief@5') {
-      setAdminUnlocked(true);
+  const handleUnlock = async () => {
+    const err = await signIn(adminPassword);
+    if (err) {
+      setPasswordError('Incorrect password. Try again.');
+    } else {
+      setAdminPassword('');
       setPasswordError('');
       setAdminCollapsed(false);
-    } else {
-      setPasswordError('Incorrect password. Try again.');
     }
   };
 
@@ -140,7 +142,7 @@ export default function Blog() {
                       {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                     </p>
                   </div>
-                  {adminUnlocked && (
+                  {isAdmin && (
                     <div className="flex flex-col space-y-2 ml-4">
                       <button onClick={() => handleEditPost(post)}
                         className="bg-[#00529b] text-white font-semibold text-sm px-3 py-1.5 rounded-lg hover:bg-[#003d75] transition-colors flex items-center space-x-1">
@@ -174,7 +176,7 @@ export default function Blog() {
             <Lock className="w-4 h-4" /><span className="font-medium text-sm">Admin</span>
           </button>
 
-          {!adminCollapsed && !adminUnlocked && (
+          {!adminCollapsed && !isAdmin && (
             <div className="max-w-md mb-4">
               <p className="text-slate-600 mb-3 text-sm">Enter password to manage posts:</p>
               <div className="flex space-x-2">
@@ -187,9 +189,12 @@ export default function Blog() {
             </div>
           )}
 
-          {adminUnlocked && !adminCollapsed && (
+          {isAdmin && !adminCollapsed && (
             <div>
-              <p className="text-green-600 font-medium mb-4 text-sm">✓ Admin access unlocked</p>
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-green-600 font-medium text-sm">✓ Admin access unlocked</p>
+                <button onClick={signOut} className="text-slate-500 hover:text-slate-700 text-sm font-medium">Log out</button>
+              </div>
               {!showAddForm ? (
                 <button onClick={() => setShowAddForm(true)}
                   className="bg-[#00529b] text-white font-bold px-6 py-2.5 rounded-lg hover:bg-[#003d75] transition-colors text-sm">

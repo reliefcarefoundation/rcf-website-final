@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Trash2, ExternalLink, CreditCard as EditIcon, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useAdminAuth } from '../hooks/useAdminAuth';
 
 interface Partner {
   id: string;
@@ -16,7 +17,7 @@ export default function OurPartners() {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [adminUnlocked, setAdminUnlocked] = useState(false);
+  const { isAdmin, signIn, signOut } = useAdminAuth();
   const [adminPassword, setAdminPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
@@ -38,13 +39,14 @@ export default function OurPartners() {
     setLoading(false);
   };
 
-  const handleUnlock = () => {
-    if (adminPassword === 're1ief@5') {
-      setAdminUnlocked(true);
+  const handleUnlock = async () => {
+    const err = await signIn(adminPassword);
+    if (err) {
+      setPasswordError('Incorrect password. Try again.');
+    } else {
+      setAdminPassword('');
       setPasswordError('');
       setAdminCollapsed(false);
-    } else {
-      setPasswordError('Incorrect password. Try again.');
     }
   };
 
@@ -139,7 +141,7 @@ export default function OurPartners() {
                       <span>Visit Website</span><ExternalLink className="w-4 h-4" />
                     </a>
                   )}
-                  {adminUnlocked && (
+                  {isAdmin && (
                     <div className="flex items-center space-x-2">
                       <button onClick={() => handleEditPartner(partner)}
                         className="text-[#00529b] hover:text-[#003d75] font-semibold text-sm flex items-center space-x-1">
@@ -174,7 +176,7 @@ export default function OurPartners() {
             <Lock className="w-4 h-4" /><span className="font-medium text-sm">Admin</span>
           </button>
 
-          {!adminCollapsed && !adminUnlocked && (
+          {!adminCollapsed && !isAdmin && (
             <div className="max-w-md mb-4">
               <p className="text-slate-600 mb-3 text-sm">Enter password to manage partners:</p>
               <div className="flex space-x-2">
@@ -187,9 +189,12 @@ export default function OurPartners() {
             </div>
           )}
 
-          {adminUnlocked && !adminCollapsed && (
+          {isAdmin && !adminCollapsed && (
             <div>
-              <p className="text-green-600 font-medium mb-4 text-sm">✓ Admin access unlocked</p>
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-green-600 font-medium text-sm">✓ Admin access unlocked</p>
+                <button onClick={signOut} className="text-slate-500 hover:text-slate-700 text-sm font-medium">Log out</button>
+              </div>
               {!showAddForm ? (
                 <button onClick={() => setShowAddForm(true)}
                   className="bg-[#00529b] text-white font-bold px-6 py-2.5 rounded-lg hover:bg-[#003d75] transition-colors text-sm">
